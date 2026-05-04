@@ -1,6 +1,6 @@
+import { NavLink, useLocation } from '@umijs/max';
 import { Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { NavLink, history } from 'umi';
 import routes from '../../config/routes';
 import styles from './index.less';
 
@@ -8,8 +8,8 @@ const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 
 const CommMenu: React.FC = () => {
-  const [selectKeys, setSelectKeys] = useState([history.location.pathname]); // 选中Menu.Item
-  const [openKeys, setOpenKeys] = useState<any[]>([]); // 选中Menu.Item
+  const { pathname } = useLocation(); // 获取当前路径
+  const [selectKeys, setSelectKeys] = useState([pathname]);
 
   // 生成Menu菜单
   const renderMenu = (data: any[]) => {
@@ -56,9 +56,9 @@ const CommMenu: React.FC = () => {
   };
 
   useEffect(() => {
-    const path = history.location.pathname;
-    setOpenKeys(['/' + path.split('/')[1]]);
-  }, [history.location.pathname]);
+    const path = pathname;
+    setSelectKeys([path]);
+  }, [pathname]);
 
   return (
     <div className={styles.center}>
@@ -66,11 +66,9 @@ const CommMenu: React.FC = () => {
         theme="light"
         mode="horizontal"
         selectedKeys={selectKeys}
-        openKeys={openKeys}
         onClick={(data: any) => setSelectKeys([data.key])}
-        onOpenChange={(data: any) => setOpenKeys([data[1]])}
       >
-        {renderMenu(handleRoutes(routes[0].routes || []))}
+        {renderMenu(handleRoutes(routes || []))}
       </Menu>
     </div>
   );

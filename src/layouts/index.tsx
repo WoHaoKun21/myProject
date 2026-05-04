@@ -5,16 +5,29 @@ import {
   SearchType,
   ShoppingType,
 } from '@/components/Icon';
+import { ArrowUpOutlined } from '@ant-design/icons';
 import { Outlet } from '@umijs/max';
+import { Modal } from 'antd';
+import { useEffect, useState } from 'react';
 import CommMenu from './CommMenu';
 import styles from './index.less';
 
 const Layout = () => {
+  const [showTop, setShowTop] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    window.onscroll = () => {
+      if (window.scrollY > 1200) setShowTop(true);
+      else setShowTop(false);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       <header>
         <div className={styles.left}>
-          <div>
+          <div onClick={() => setOpen(true)}>
             <CoordinateType style={{ fontSize: 22 }} />
             上海
           </div>
@@ -31,13 +44,75 @@ const Layout = () => {
         <Outlet />
       </section>
       <footer>
-        <div></div>
-        <div></div>
+        <ul className={styles.info}>
+          <li>甜点公告</li>
+          <li>关于甜点</li>
+          <li>客户服务</li>
+          <li>经营许可证</li>
+          <li>生产许可证</li>
+          <li>付费协议</li>
+          <li>联系我们</li>
+        </ul>
+        <div className={styles.info}>
+          如有问题，请联系我们的客服人员。工作时间：周一至周日 9:00-21:00
+        </div>
+        <div className={styles.info}>
+          copyright©2010-2026
+          诺心lecake.com版权所有&nbsp;&nbsp;诺心食品（上海）有限公司&nbsp;&nbsp;
+          沪ICP备10211730号-2 &nbsp;&nbsp; 沪公网安备31010402003364号
+        </div>
       </footer>
       <div className={styles.online}>
-        <OnlineType style={{ fontSize: 30, marginBottom: 5 }} />
-        <span>在线客服</span>
+        <div className={styles.customer}>
+          <OnlineType style={{ fontSize: 30, marginBottom: 5 }} />
+          <span>在线客服</span>
+        </div>
+        <div
+          className={styles.top}
+          style={{ opacity: showTop ? 1 : 0 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          <ArrowUpOutlined style={{ fontSize: 30, marginBottom: 5 }} />
+          <span>返回顶部</span>
+        </div>
       </div>
+
+      {open && (
+        <Modal
+          centered
+          open={true}
+          title={
+            <div>
+              当前选择城市：
+              <CoordinateType style={{ marginRight: 3 }} />
+              杭州
+            </div>
+          }
+          footer={null}
+          onCancel={() => setOpen(false)}
+          getContainer={
+            document.getElementsByClassName(styles.container)[0] as HTMLElement
+          }
+        >
+          <p>请选择您所配送的城市：</p>
+          <ul className={styles.cityList}>
+            <li>上海</li>
+            <li>北京</li>
+            <li>广州</li>
+            <li>深圳</li>
+            <li>杭州</li>
+            <li>无锡</li>
+            <li>南京</li>
+            <li>苏州</li>
+            <li>南通</li>
+            <li>石家庄</li>
+            <li>天津</li>
+            <li>宁波</li>
+            <li>成都</li>
+          </ul>
+          <p>全国其他城市</p>
+        </Modal>
+      )}
     </div>
   );
 };

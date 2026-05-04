@@ -13,10 +13,12 @@
       align-items: center;
       > div {
         margin-right: 40px;
+        cursor: pointer;
       }
       > span {
         font-size: 22px;
         color: #d6bb70;
+        cursor: pointer;
       }
     }
     .center {
@@ -34,36 +36,85 @@
   }
 
   > section {
-    height: 100vh;
+    min-height: calc(100vh - 200px);
+    height: calc(100vh - 200px);
     overflow: auto;
     overflow-y: auto;
+    background-color: #f002;
   }
 
   > footer {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 200px;
     background-color: #fff;
+    box-shadow: 0 0 10px rgba(222, 222, 222, 0.6);
+    > ul.info {
+      margin: 0px;
+      display: flex;
+      justify-content: space-between;
+      width: 35%;
+    }
+    div.info {
+      width: 35%;
+      font-size: 14px;
+    }
+    div.info:nth-of-type(1) {
+      margin: 28px 0px;
+    }
+    div.info:last-of-type {
+      color: #a5a2a2;
+    }
   }
 
+  // 客服中心
   > .online {
     position: fixed;
     right: 20px;
     bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 76px;
-    height: 76px;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    background: #ffffff;
-    cursor: pointer;
-    &:hover {
-      color: #ff8e00;
-      transition: all 0.15s ease;
+    .customer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 76px;
+      height: 76px;
+      font-size: 14px;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      background: #ffffff;
+      cursor: pointer;
+      &:hover {
+        color: #ff8e00;
+        transition: all 0.15s ease;
+      }
+    }
+    .top {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 76px;
+      height: 76px;
+      font-size: 14px;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      background: #ffffff;
+      cursor: pointer;
+    }
+  }
+
+  // 弹框样式
+  .cityList {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    > li {
+      min-width: 50px;
+      font-size: 14px;
     }
   }
 }

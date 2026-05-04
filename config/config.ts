@@ -3,6 +3,8 @@ import routes from './routes';
 
 // @umi/max（umi@4）最新版：之前的一些插件约定开启的规则，在这个版本中几乎都要通过显式的配置开启
 export default defineConfig({
+  // 已有 routes 里 path: '/' 的 component: '@/layouts'；若再启用约定式 layouts/index，会套两层同一布局导致重复渲染
+  // conventionLayout: false,// 当启用自定义layout的时候，页面会嵌套两层，conventionLayout设置为false后就不会嵌套了，或者把routes的@/layouts注释掉也行
   antd: {}, //
   access: {}, // 启用静态资源
   model: {}, // 我的理解是：自定义hooks模块，可通过react提供的useModel来进行获取
