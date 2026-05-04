@@ -12,42 +12,18 @@ export interface Routes {
 }
 
 const routes: Routes[] = [
-  { path: '/', redirect: '/home' },
-  {
-    path: '/home',
-    name: 'model的使用',
-    component: './Home',
-  },
+  { path: '/', redirect: '/leaflet' },
   {
     path: '/leaflet',
     name: 'Leflets的使用',
     routes: [
+      { path: '/leaflet', redirect: '/leaflet/tdMap' },
       {
         path: '/leaflet/tdMap',
         name: 'Leflets加载天地图',
         component: './leafletTD',
       },
-      // {
-      //   path: '/leaflet/bdMap',
-      //   name: 'Leflets加载百度地图',
-      //   component: './leafletBD',
-      // },
-      // {
-      //   path: '/leaflet/gdMap',
-      //   name: 'Leflets加载高德地图',
-      //   component: './leafletGD',
-      // },
-      // {
-      //   path: '/leaflet/bdSwitch',
-      //   name: 'Leflets百度地图图层切换',
-      //   component: './leafletBDSwitch',
-      // },
     ],
-  },
-  {
-    path: '/orillusion',
-    name: 'Orillusion模型',
-    component: './OrillusionModel',
   },
 ];
 export default routes;

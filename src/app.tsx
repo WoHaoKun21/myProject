@@ -12,8 +12,11 @@ export const layout = () => {
     title: '芯牧云实例',
     logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
     layout: 'top',
-    menu: {
-      locale: false,
+    menu: { locale: false },
+    contentStyle: {
+      padding: 0,
+      margin: 0,
+      height: 'calc(100vh - 56px)',
     },
   };
 };
