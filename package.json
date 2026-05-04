@@ -1,0 +1,37 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "max build",
+    "dev": "max dev",
+    "format": "prettier --cache --write .",
+    "postinstall": "max setup",
+    "prepare": "husky install",
+    "setup": "max setup",
+    "start": "npm run dev",
+    "test": "eslint . --ext .tsx,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.2.6",
+    "@ant-design/pro-components": "^2.4.4",
+    "@ant-design/pro-layout": "^7.16.13",
+    "@ant-design/pro-table": "^3.12.3",
+    "@orillusion/core": "^0.6.9",
+    "@umijs/max": "^4.0.81",
+    "antd": "^5.4.0",
+    "classnames": "^2.3.2",
+    "echarts": "^5.4.3",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.198",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.7",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "prettier-plugin-packagejson": "^2.4.3",
+    "typescript": "^5.0.3"
+  }
+}
