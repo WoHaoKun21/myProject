@@ -1,6 +1,7 @@
 .container {
   position: relative;
   overflow: hidden;
+  user-select: none;
   > header {
     position: fixed;
     z-index: 9;
@@ -9,7 +10,7 @@
     justify-content: center;
     height: 100px;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: #ffffff66;
     .left {
       display: flex;
       align-items: center;
@@ -31,45 +32,64 @@
           background-color: transparent;
           border-bottom: none;
         }
+        .ant-menu-light.ant-menu-horizontal > .ant-menu-item-selected::after,
+        .ant-menu-light
+          > .ant-menu.ant-menu-horizontal
+          > .ant-menu-item-selected::after,
+        .ant-menu-light.ant-menu-horizontal > .ant-menu-submenu-selected::after,
+        .ant-menu-light
+          > .ant-menu.ant-menu-horizontal
+          > .ant-menu-submenu-selected::after,
+        .ant-menu-item:hover::after {
+          border-bottom: 2px solid #0000;
+        }
+        .ant-menu-light .ant-menu-item-selected a {
+          color: #d6bb70;
+        }
       }
     }
   }
 
-  > section {
-    min-height: calc(100vh - 200px); 
-  }
+  .content {
+    height: 100%;
+    overflow-y: auto;
+    > section {
+      min-height: calc(100% - 200px);
+    }
 
-  > footer {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 200px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(222, 222, 222, 0.6);
-    > ul.info {
-      margin: 0px;
+    > footer {
+      position: relative;
+      z-index: 1;
       display: flex;
-      justify-content: space-between;
-      width: 35%;
-    }
-    div.info {
-      width: 35%;
-      font-size: 14px;
-    }
-    div.info:nth-of-type(1) {
-      margin: 28px 0px;
-    }
-    div.info:last-of-type {
-      color: #a5a2a2;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(222, 222, 222, 0.6);
+      > ul.info {
+        margin: 0px;
+        display: flex;
+        justify-content: space-between;
+        width: 35%;
+      }
+      div.info {
+        width: 35%;
+        font-size: 14px;
+      }
+      div.info:nth-of-type(1) {
+        margin: 28px 0px;
+      }
+      // div.info:last-of-type {
+      //   color: #a5a2a2;
+      // }
     }
   }
 
   // 客服中心
   > .online {
     position: fixed;
+    z-index: 9;
     right: 20px;
     bottom: 20px;
     .customer {

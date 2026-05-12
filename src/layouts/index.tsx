@@ -6,15 +6,19 @@ import {
   ShoppingType,
 } from '@/components/Icon';
 import { ArrowUpOutlined } from '@ant-design/icons';
-import { Outlet } from '@umijs/max';
+import { Outlet, useLocation } from '@umijs/max';
 import { Modal } from 'antd';
 import { useEffect, useState } from 'react';
 import CommMenu from './CommMenu';
 import styles from './index.less';
 
 const Layout = () => {
+  const { pathname } = useLocation();
   const [showTop, setShowTop] = useState(false);
-  const [modalObj, setModalObj] = useState<{ open: boolean; title: string }>({
+  const [modalObj, setModalObj] = useState<{
+    open: boolean;
+    title: string;
+  }>({
     open: false,
     title: '',
   });
@@ -26,11 +30,21 @@ const Layout = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(pathname);
+  }, [pathname]);
+
   const { open, title } = modalObj;
 
   return (
     <div className={styles.container}>
-      <header>
+      <header
+        style={{
+          position: pathname === '/home' ? 'fixed' : 'static',
+          backgroundColor: pathname === '/home' ? '#ffffff66' : '#fff2',
+          borderBottom: pathname !== '/home' ? '1px solid #d6bb70' : 'none',
+        }}
+      >
         <div className={styles.left}>
           <div onClick={() => setModalObj((d) => ({ ...d, open: true }))}>
             <CoordinateType style={{ fontSize: 22 }} />
@@ -45,28 +59,30 @@ const Layout = () => {
           <PersonType style={{ fontSize: 22 }} />
         </div>
       </header>
-      <section>
-        <Outlet />
-      </section>
-      <footer>
-        <ul className={styles.info}>
-          <li>甜点公告</li>
-          <li>关于甜点</li>
-          <li>客户服务</li>
-          <li>经营许可证</li>
-          <li>生产许可证</li>
-          <li>付费协议</li>
-          <li>联系我们</li>
-        </ul>
-        <div className={styles.info}>
-          如有问题，请联系我们的客服人员。工作时间：周一至周日 9:00-21:00
-        </div>
-        <div className={styles.info}>
-          copyright©2010-2026
-          诺心lecake.com版权所有&nbsp;&nbsp;诺心食品（上海）有限公司&nbsp;&nbsp;
-          沪ICP备10211730号-2 &nbsp;&nbsp; 沪公网安备31010402003364号
-        </div>
-      </footer>
+      <div
+        className={styles.content}
+        style={{
+          height: pathname === '/home' ? '100vh' : 'calc(100vh - 100px)',
+        }}
+      >
+        <section>
+          <Outlet />
+        </section>
+        <footer>
+          <ul className={styles.info}>
+            <li>甜点公告</li>
+            <li>关于甜点</li>
+            <li>客户服务</li>
+            <li>经营许可证</li>
+            <li>生产许可证</li>
+            <li>付费协议</li>
+            <li>联系我们</li>
+          </ul>
+          <div className={styles.info}>
+            如有问题，请联系我们的客服人员。工作时间：周一至周日 9:00-21:00
+          </div>
+        </footer>
+      </div>
 
       <div className={styles.online}>
         <div className={styles.customer}>

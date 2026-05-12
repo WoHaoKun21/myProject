@@ -34,38 +34,17 @@ const routes: Routes[] = [
   {
     path: '/cake',
     name: '蛋糕甄选',
-    component: './404',
+    component: './Cake',
   },
   {
     path: '/dessert',
     name: '甜品优选',
-    component: './404',
-  }, 
-  {
-    path: '/playAlong',
-    name: '合作专区',
-    routes: [
-      {
-        path: '/playAlong/bank',
-        name: '银行活动',
-        component: './404',
-      },
-      {
-        path: '/playAlong/business',
-        name: '企业采购',
-        component: './404',
-      },
-      {
-        path: '/playAlong/zone',
-        name: '大客户区',
-        component: './404',
-      },
-    ],
+    component: './Dessert',
   },
   {
     path: '/convert',
     name: '立即兑换',
-    component: './404',
+    component: './Convert',
   },
   { component: './404', hideInMenu: true },
 ];
