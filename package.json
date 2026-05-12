@@ -19,7 +19,8 @@
     "classnames": "^2.3.2",
     "dayjs": "^1.11.20",
     "echarts": "^5.4.3",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "swiper": "^6.8.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.198",

@@ -40,12 +40,7 @@ const routes: Routes[] = [
     path: '/dessert',
     name: '甜品优选',
     component: './404',
-  },
-  {
-    path: '/petCake',
-    name: '宠物蛋糕',
-    component: './404',
-  },
+  }, 
   {
     path: '/playAlong',
     name: '合作专区',

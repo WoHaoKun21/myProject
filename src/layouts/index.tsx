@@ -14,7 +14,10 @@ import styles from './index.less';
 
 const Layout = () => {
   const [showTop, setShowTop] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [modalObj, setModalObj] = useState<{ open: boolean; title: string }>({
+    open: false,
+    title: '',
+  });
 
   useEffect(() => {
     window.onscroll = () => {
@@ -23,18 +26,20 @@ const Layout = () => {
     };
   }, []);
 
+  const { open, title } = modalObj;
+
   return (
     <div className={styles.container}>
       <header>
         <div className={styles.left}>
-          <div onClick={() => setOpen(true)}>
+          <div onClick={() => setModalObj((d) => ({ ...d, open: true }))}>
             <CoordinateType style={{ fontSize: 22 }} />
-            上海
+            {title}
           </div>
           <span>甜点DESSERT</span>
         </div>
         <CommMenu />
-        <div className={styles.right}>
+        <div>
           <SearchType style={{ fontSize: 22 }} />
           <ShoppingType style={{ fontSize: 22, margin: '0px 30px' }} />
           <PersonType style={{ fontSize: 22 }} />
@@ -62,6 +67,7 @@ const Layout = () => {
           沪ICP备10211730号-2 &nbsp;&nbsp; 沪公网安备31010402003364号
         </div>
       </footer>
+
       <div className={styles.online}>
         <div className={styles.customer}>
           <OnlineType style={{ fontSize: 30, marginBottom: 5 }} />
@@ -76,7 +82,6 @@ const Layout = () => {
           <span>返回顶部</span>
         </div>
       </div>
-
       {open && (
         <Modal
           centered
@@ -89,26 +94,52 @@ const Layout = () => {
             </div>
           }
           footer={null}
-          onCancel={() => setOpen(false)}
+          onCancel={() => setModalObj((d) => ({ ...d, open: false }))}
           getContainer={
             document.getElementsByClassName(styles.container)[0] as HTMLElement
           }
         >
           <p>请选择您所配送的城市：</p>
           <ul className={styles.cityList}>
-            <li>上海</li>
-            <li>北京</li>
-            <li>广州</li>
-            <li>深圳</li>
-            <li>杭州</li>
-            <li>无锡</li>
-            <li>南京</li>
-            <li>苏州</li>
-            <li>南通</li>
-            <li>石家庄</li>
-            <li>天津</li>
-            <li>宁波</li>
-            <li>成都</li>
+            <li onClick={() => setModalObj({ open: true, title: '上海' })}>
+              上海
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '北京' })}>
+              北京
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '广州' })}>
+              广州
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '深圳' })}>
+              深圳
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '杭州' })}>
+              杭州
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '无锡' })}>
+              无锡
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '南京' })}>
+              南京
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '苏州' })}>
+              苏州
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '南通' })}>
+              南通
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '石家庄' })}>
+              石家庄
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '天津' })}>
+              天津
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '宁波' })}>
+              宁波
+            </li>
+            <li onClick={() => setModalObj({ open: true, title: '成都' })}>
+              成都
+            </li>
           </ul>
           <p>全国其他城市</p>
         </Modal>
