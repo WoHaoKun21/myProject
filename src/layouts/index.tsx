@@ -7,10 +7,35 @@ import {
 } from '@/components/Icon';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { Outlet, useLocation } from '@umijs/max';
-import { Modal } from 'antd';
+import { Dropdown, Modal, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import CommMenu from './CommMenu';
 import styles from './index.less';
+
+const items = [
+  {
+    key: '1',
+    label: (
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.antgroup.com"
+      >
+        1st menu item
+      </a>
+    ),
+  },
+  {
+    key: '2',
+    label: (
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.aliyun.com"
+      ></a>
+    ),
+  },
+];
 
 const Layout = () => {
   const { pathname } = useLocation();
@@ -55,7 +80,11 @@ const Layout = () => {
         <CommMenu />
         <div>
           <SearchType style={{ fontSize: 22 }} />
-          <ShoppingType style={{ fontSize: 22, margin: '0px 30px' }} />
+          <Space>
+            <Dropdown menu={{ items }} placement="bottomCenter">
+              <ShoppingType style={{ fontSize: 22, margin: '0px 30px' }} />
+            </Dropdown>
+          </Space>
           <PersonType style={{ fontSize: 22 }} />
         </div>
       </header>
