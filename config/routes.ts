@@ -46,6 +46,12 @@ const routes: Routes[] = [
     name: '立即兑换',
     component: './Convert',
   },
+  {
+    path: '/cakeInfo',
+    name: '甜点详情',
+    component: './CakeInfo',
+    hideInMenu: true,
+  },
   { component: './404', hideInMenu: true },
 ];
 export default routes;

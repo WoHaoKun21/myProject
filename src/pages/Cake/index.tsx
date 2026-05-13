@@ -1,10 +1,14 @@
 import { cakeList } from '@/assets/cake';
-import { ShoppingType } from '@/components/Icon';
+import { FillLoveType, LoveType } from '@/components/Icon';
+import { commCode, remove } from '@/constants';
+import { connect, useDispatch } from '@umijs/max';
+import { message } from 'antd';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import styles from './index.less';
 
-const Cake: React.FC = () => {
+const Cake: React.FC = ({ shopList }: any) => {
+  const dispatch = useDispatch();
   const [select, setSelect] = useState<{
     taste: string | number;
     norms: string | number;
@@ -12,6 +16,15 @@ const Cake: React.FC = () => {
     taste: '',
     norms: '',
   });
+
+  const addLove = (shop: any) => {
+    const newList = commCode(shop, shopList, dispatch);
+    if (newList.length !== 0) {
+      dispatch({ type: 'shop/add', payload: newList });
+    } else {
+      message.warning('请勿重复添加！');
+    }
+  };
 
   const { taste, norms } = select;
 
@@ -115,17 +128,32 @@ const Cake: React.FC = () => {
                 <p className={styles.name}>{o.name ?? '-'}</p>
                 <p className={styles.price}>{o.price ?? '-'}</p>
                 <div className={styles.btn}>
-                  <ShoppingType
-                    style={{
-                      fontSize: 22,
-                      color: '#d6bb70',
-                      margin: '0px 10px',
-                    }}
-                  />
+                  {shopList.map((o: any) => o.name).includes(o.name) ? (
+                    <FillLoveType
+                      onClick={() => remove(o, dispatch, shopList)}
+                      style={{
+                        fontSize: 22,
+                        color: '#d6bb70',
+                        margin: '0px 10px',
+                      }}
+                    />
+                  ) : (
+                    <LoveType
+                      onClick={() => addLove(o)}
+                      style={{
+                        fontSize: 22,
+                        color: '#d6bb70',
+                        margin: '0px 10px',
+                      }}
+                    />
+                  )}
                   <span
+                    onClick={() => addLove(o)}
                     style={{ color: '#000', borderBottom: '1px solid #333' }}
                   >
-                    加入购物车
+                   { shopList.map((o: any) => o.name).includes(o.name)
+                      ? '已加入喜欢'
+                      : '加入喜欢'}
                   </span>
                 </div>
               </div>
@@ -136,4 +164,8 @@ const Cake: React.FC = () => {
   );
 };
 
-export default Cake;
+const stateToProps = ({ shop }: any) => {
+  return { ...shop };
+};
+
+export default connect(stateToProps)(Cake);

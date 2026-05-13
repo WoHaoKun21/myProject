@@ -4,14 +4,9 @@ import { commCode, remove } from '@/constants';
 import { connect, useDispatch } from '@umijs/max';
 import { message } from 'antd';
 import React from 'react';
-import SwiperCore, { A11y, Autoplay, Navigation, Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.min.css';
 import styles from './index.less';
 
-SwiperCore.use([Navigation, Pagination, Autoplay, A11y]);
-
-const Dessert: React.FC = ({ shopList }: any) => {
+const CakeInfo: React.FC = ({ shopList }: any) => {
   const dispatch = useDispatch();
 
   const addLove = (shop: any) => {
@@ -26,21 +21,7 @@ const Dessert: React.FC = ({ shopList }: any) => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Swiper
-          autoplay={{ delay: 5000 }}
-          initialSlide={0}
-          slidesPerView={'auto'}
-          navigation={false}
-          loop={true}
-          noSwiping // 滑动到最后，左右箭头无法使用
-        >
-          <SwiperSlide style={{ width: '100%', height: '100%' }}>
-            <img src="/dessert/banner1.jpg" alt="" />
-          </SwiperSlide>
-          <SwiperSlide style={{ width: '100%', height: '100%' }}>
-            <img src="/dessert/banner2.jpg" alt="" />
-          </SwiperSlide>
-        </Swiper>
+        <img src="/cake/ynbb.jpg" alt="" />
       </div>
       <div className={styles.list}>
         {dessertCakesList.map((o) => (
@@ -87,4 +68,4 @@ const stateToProps = ({ shop }: any) => {
   return { ...shop };
 };
 
-export default connect(stateToProps)(Dessert);
+export default connect(stateToProps)(CakeInfo);

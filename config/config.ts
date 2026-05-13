@@ -12,7 +12,7 @@ export default defineConfig({
   request: {}, // 开启异步请求，对应的 app.ts下的request可以对请求进行处理
   // layout: {}, // @umi/max的内置布局，app.ts下的layout优先级最高
   // 开启dva
-  // dva: { immer: {} },
+  dva: { immer: {} },
   historyWithQuery: {}, // 新版通过“history.location.query”会报错，开启后就能正常使用了
   hash: true, //build的时候对文件名字进行hash处理
   fastRefresh: true, // 热更新，更新初始initialState的数据，app.ts下的

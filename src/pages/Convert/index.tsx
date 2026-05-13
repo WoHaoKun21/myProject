@@ -5,24 +5,36 @@ import {
   convert4,
   convert5,
 } from '@/assets/convert';
-import { ShoppingType } from '@/components/Icon';
+import { FillLoveType, LoveType } from '@/components/Icon';
+import { commCode, remove } from '@/constants';
 import { RightOutlined } from '@ant-design/icons/lib/icons';
-import { Tabs } from 'antd';
+import { connect, useDispatch } from '@umijs/max';
+import { Tabs, message } from 'antd';
 import React, { useState } from 'react';
 import styles from './index.less';
 
-const Convert: React.FC = () => {
+const Convert: React.FC = ({ shopList }: any) => {
+  const dispatch = useDispatch();
   const [selectKey, setSelectKey] = useState<string>('1');
+
+  const addLove = (shop: any) => {
+    const newList = commCode(shop, shopList, dispatch);
+    if (newList.length !== 0) {
+      dispatch({ type: 'shop/add', payload: newList });
+    } else {
+      message.warning('请勿重复添加！');
+    }
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <Tabs activeKey={selectKey} onChange={(key) => setSelectKey(key)}>
-          <Tabs.TabPane tab="蛋糕券兑换专区" key="1" />
-          <Tabs.TabPane tab="组合券兑换专区" key="2" />
-          <Tabs.TabPane tab="小食兑换专区" key="3" />
+          <Tabs.TabPane tab="蛋糕专区" key="1" />
+          <Tabs.TabPane tab="组合专区" key="2" />
+          <Tabs.TabPane tab="小食专区" key="3" />
           <Tabs.TabPane tab="心选蛋糕系列" key="4" />
-          <Tabs.TabPane tab="福利优选n+专区" key="5" />
+          <Tabs.TabPane tab="优选专区" key="5" />
         </Tabs>
       </div>
       <div className={styles.list}>
@@ -34,7 +46,7 @@ const Convert: React.FC = () => {
                   <p className={styles.name}>{o.name ?? '-'}</p>
                   <p className={styles.price}>{o.price ?? '-'}</p>
                   <div className={styles.btn}>
-                    立即兑换
+                    立即查看
                     <RightOutlined style={{ fontSize: 10 }} />
                   </div>
                 </div>
@@ -48,7 +60,7 @@ const Convert: React.FC = () => {
                   <p className={styles.name}>{o.name ?? '-'}</p>
                   <p className={styles.price}>{o.price ?? '-'}</p>
                   <div className={styles.btn}>
-                    立即兑换
+                    立即查看
                     <RightOutlined style={{ fontSize: 10 }} />
                   </div>
                 </div>
@@ -62,17 +74,32 @@ const Convert: React.FC = () => {
                   <p className={styles.name}>{o.name ?? '-'}</p>
                   <p className={styles.price}>{o.price ?? '-'}</p>
                   <div className={styles.btn}>
-                    <ShoppingType
-                      style={{
-                        fontSize: 22,
-                        color: '#d6bb70',
-                        margin: '0px 10px',
-                      }}
-                    />
+                    {shopList.map((o: any) => o.name).includes(o.name) ? (
+                      <FillLoveType
+                        onClick={() => remove(o, dispatch, shopList)}
+                        style={{
+                          fontSize: 22,
+                          color: '#d6bb70',
+                          margin: '0px 10px',
+                        }}
+                      />
+                    ) : (
+                      <LoveType
+                        onClick={() => addLove(o)}
+                        style={{
+                          fontSize: 22,
+                          color: '#d6bb70',
+                          margin: '0px 10px',
+                        }}
+                      />
+                    )}
                     <span
+                      onClick={() => addLove(o)}
                       style={{ color: '#000', borderBottom: '1px solid #333' }}
                     >
-                      加入购物车
+                      {shopList.map((o: any) => o.name).includes(o.name)
+                        ? '已加入喜欢'
+                        : '加入喜欢'}
                     </span>
                   </div>
                 </div>
@@ -86,7 +113,7 @@ const Convert: React.FC = () => {
                   <p className={styles.name}>{o.name ?? '-'}</p>
                   <p className={styles.price}>{o.price ?? '-'}</p>
                   <div className={styles.btn}>
-                    立即兑换
+                    立即查看
                     <RightOutlined style={{ fontSize: 10 }} />
                   </div>
                 </div>
@@ -100,7 +127,7 @@ const Convert: React.FC = () => {
                   <p className={styles.name}>{o.name ?? '-'}</p>
                   <p className={styles.price}>{o.price ?? '-'}</p>
                   <div className={styles.btn}>
-                    立即兑换
+                    立即查看
                     <RightOutlined style={{ fontSize: 10 }} />
                   </div>
                 </div>
@@ -111,4 +138,8 @@ const Convert: React.FC = () => {
   );
 };
 
-export default Convert;
+const stateToProps = ({ shop }: any) => {
+  return { ...shop };
+};
+
+export default connect(stateToProps)(Convert);
