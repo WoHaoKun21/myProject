@@ -33,7 +33,7 @@ const routes: Routes[] = [
   },
   {
     path: '/cake',
-    name: '蛋糕甄选',
+    name: '甜点甄选',
     component: './Cake',
   },
   {
@@ -43,7 +43,7 @@ const routes: Routes[] = [
   },
   {
     path: '/convert',
-    name: '立即兑换',
+    name: '甜点专区',
     component: './Convert',
   },
   {
