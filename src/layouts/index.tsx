@@ -52,23 +52,20 @@ const Layout = (props: any) => {
             <span>甜点DESSERT</span>
           </div>
           <CommMenu />
-          <div>
-            <SearchType style={{ fontSize: 22 }} />
+          <div className={styles.right}>
+            <SearchType />
             <Space>
               <Dropdown
                 menu={{ items: shopList.length !== 0 ? shopList : [obj] }}
                 placement="bottomCenter"
               >
                 <LoveType
-                  style={{
-                    fontSize: 22,
-                    margin: '0px 30px',
-                    cursor: 'pointer',
-                  }}
+                  className={styles.love}
+                  style={{ margin: '0px 30px' }}
                 />
               </Dropdown>
             </Space>
-            <PersonType style={{ fontSize: 22 }} />
+            <PersonType />
           </div>
         </header>
         <div
