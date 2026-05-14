@@ -52,6 +52,12 @@ const routes: Routes[] = [
     component: './CakeInfo',
     hideInMenu: true,
   },
+  {
+    path: '/loveList',
+    name: '喜欢列表',
+    component: './LoveList',
+    hideInMenu: true,
+  },
   { component: './404', hideInMenu: true },
 ];
 export default routes;

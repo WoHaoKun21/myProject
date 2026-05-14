@@ -4,9 +4,9 @@ import {
   PersonType,
   SearchType,
 } from '@/components/Icon';
-import { ArrowUpOutlined } from '@ant-design/icons';
-import { connect, Outlet, useLocation } from '@umijs/max';
-import { ConfigProvider, Dropdown, Modal, Space } from 'antd';
+import { ArrowUpOutlined, CloseOutlined } from '@ant-design/icons';
+import { connect, history, Outlet, useLocation } from '@umijs/max';
+import { ConfigProvider, Dropdown, Input, Modal, Space } from 'antd';
 import { useState } from 'react';
 import CommMenu from './CommMenu';
 import styles from './index.less';
@@ -20,6 +20,10 @@ const Layout = (props: any) => {
   let { shopList } = props;
 
   const { pathname } = useLocation();
+  const [search, setSearch] = useState<{ open: boolean; value: string }>({
+    open: false,
+    value: '',
+  });
   const [modalObj, setModalObj] = useState<{
     open: boolean;
     title: string;
@@ -51,9 +55,42 @@ const Layout = (props: any) => {
             </div>
             <span>甜点DESSERT</span>
           </div>
-          <CommMenu />
-          <div className={styles.right}>
-            <SearchType />
+          {!search.open && <CommMenu />}
+          <div
+            className={styles.right}
+            style={{ width: search.open ? 538 : 'auto' }}
+          >
+            {search.open && (
+              <>
+                <CloseOutlined
+                  style={{ fontSize: 16 }}
+                  onClick={() => {
+                    history.push('/cake', { value: '' });
+                    setSearch({ open: false, value: '' });
+                  }}
+                />
+                <Input
+                  value={search.value}
+                  placeholder="请输入甜点名称"
+                  onChange={(e: any) => {
+                    setSearch((d) => ({ ...d, value: e.target.value }));
+                  }}
+                  onPressEnter={(e: any) => {
+                    history.push('/cake', { value: e.target.value });
+                  }}
+                  style={{ width: 150, margin: '0 8px' }}
+                />
+              </>
+            )}
+            <SearchType
+              onClick={() => {
+                if (search.open) {
+                  history.push('/cake', { value: search.value });
+                  return;
+                }
+                setSearch((d) => ({ ...d, open: true }));
+              }}
+            />
             <Space>
               <Dropdown
                 menu={{ items: shopList.length !== 0 ? shopList : [obj] }}
@@ -61,6 +98,7 @@ const Layout = (props: any) => {
               >
                 <LoveType
                   className={styles.love}
+                  onClick={() => history.push('/loveList')}
                   style={{ margin: '0px 30px' }}
                 />
               </Dropdown>
@@ -69,6 +107,7 @@ const Layout = (props: any) => {
           </div>
         </header>
         <div
+          id="content"
           className={styles.content}
           style={{
             height: pathname === '/home' ? '100vh' : 'calc(100vh - 100px)',
@@ -98,7 +137,7 @@ const Layout = (props: any) => {
             className={styles.top}
             onClick={() =>
               document
-                .getElementsByClassName(styles.content)[0]
+                .getElementById('content')!
                 .scrollTo({ top: 0, behavior: 'smooth' })
             }
           >
@@ -127,43 +166,43 @@ const Layout = (props: any) => {
           >
             <p>请选择您所配送的城市：</p>
             <ul className={styles.cityList}>
-              <li onClick={() => setModalObj({ open: true, title: '上海' })}>
+              <li onClick={() => setModalObj({ open: false, title: '上海' })}>
                 上海
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '北京' })}>
+              <li onClick={() => setModalObj({ open: false, title: '北京' })}>
                 北京
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '广州' })}>
+              <li onClick={() => setModalObj({ open: false, title: '广州' })}>
                 广州
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '深圳' })}>
+              <li onClick={() => setModalObj({ open: false, title: '深圳' })}>
                 深圳
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '杭州' })}>
+              <li onClick={() => setModalObj({ open: false, title: '杭州' })}>
                 杭州
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '无锡' })}>
+              <li onClick={() => setModalObj({ open: false, title: '无锡' })}>
                 无锡
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '南京' })}>
+              <li onClick={() => setModalObj({ open: false, title: '南京' })}>
                 南京
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '苏州' })}>
+              <li onClick={() => setModalObj({ open: false, title: '苏州' })}>
                 苏州
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '南通' })}>
+              <li onClick={() => setModalObj({ open: false, title: '南通' })}>
                 南通
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '石家庄' })}>
+              <li onClick={() => setModalObj({ open: false, title: '石家庄' })}>
                 石家庄
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '天津' })}>
+              <li onClick={() => setModalObj({ open: false, title: '天津' })}>
                 天津
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '宁波' })}>
+              <li onClick={() => setModalObj({ open: false, title: '宁波' })}>
                 宁波
               </li>
-              <li onClick={() => setModalObj({ open: true, title: '成都' })}>
+              <li onClick={() => setModalObj({ open: false, title: '成都' })}>
                 成都
               </li>
             </ul>

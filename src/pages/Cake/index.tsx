@@ -1,14 +1,15 @@
-import { cakeList } from '@/assets/cake';
 import { FillLoveType, LoveType } from '@/components/Icon';
 import { commCode, remove } from '@/constants';
-import { connect, useDispatch } from '@umijs/max';
+import { ShopArr } from '@/models/shop';
+import { connect, history, useDispatch, useLocation } from '@umijs/max';
 import { message } from 'antd';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import styles from './index.less';
 
-const Cake: React.FC = ({ shopList }: any) => {
+const Cake: React.FC<ShopArr> = ({ shopList, cakeLists }) => {
   const dispatch = useDispatch();
+  const { state }: { pathname: string; state: any } = useLocation(); // 获取当前路径
   const [select, setSelect] = useState<{
     taste: string | number;
     norms: string | number;
@@ -115,18 +116,25 @@ const Cake: React.FC = ({ shopList }: any) => {
         </div>
       </div>
       <div className={styles.list}>
-        {cakeList
+        {cakeLists
           .filter((o) => {
             if (taste && o.taste !== taste) return false;
             if (norms && o.norms !== norms) return false;
             return true;
           })
+          .filter((o) => (state?.value ? o.name.includes(state.value) : true))
           .map((o) => (
             <div className={styles.item} key={o.name}>
-              <img src={o.img ?? '/cake/byg.jpg'} alt="" />
+              <img
+                src={o.img ?? '/cake/byg.jpg'}
+                alt=""
+                onClick={() => history.push('/cakeInfo', o)}
+              />
               <div className={styles.info}>
                 <p className={styles.name}>{o.name ?? '-'}</p>
-                <p className={styles.price}>{o.price ?? '-'}</p>
+                <p className={styles.price}>
+                  {o.price ?? '-'}/约{o.weight ?? '-'}
+                </p>
                 <div className={styles.btn}>
                   {shopList.map((o: any) => o.name).includes(o.name) ? (
                     <FillLoveType
@@ -151,7 +159,7 @@ const Cake: React.FC = ({ shopList }: any) => {
                     onClick={() => addLove(o)}
                     style={{ color: '#000', borderBottom: '1px solid #333' }}
                   >
-                   { shopList.map((o: any) => o.name).includes(o.name)
+                    {shopList.map((o: any) => o.name).includes(o.name)
                       ? '已加入喜欢'
                       : '加入喜欢'}
                   </span>

@@ -1,7 +1,8 @@
 import { dessertCakesList } from '@/assets/dessert';
 import { FillLoveType, LoveType } from '@/components/Icon';
 import { commCode, remove } from '@/constants';
-import { connect, useDispatch } from '@umijs/max';
+import { ShopArr } from '@/models/shop';
+import { connect, history, useDispatch } from '@umijs/max';
 import { message } from 'antd';
 import React from 'react';
 import SwiperCore, { A11y, Autoplay, Navigation, Pagination } from 'swiper';
@@ -11,7 +12,7 @@ import styles from './index.less';
 
 SwiperCore.use([Navigation, Pagination, Autoplay, A11y]);
 
-const Dessert: React.FC = ({ shopList }: any) => {
+const Dessert: React.FC<ShopArr> = ({ shopList }) => {
   const dispatch = useDispatch();
 
   const addLove = (shop: any) => {
@@ -45,10 +46,16 @@ const Dessert: React.FC = ({ shopList }: any) => {
       <div className={styles.list}>
         {dessertCakesList.map((o) => (
           <div className={styles.item} key={o.name}>
-            <img src={o.img ?? '/cake/byg.jpg'} alt="" />
+            <img
+              src={o.img ?? '/cake/byg.jpg'}
+              alt=""
+              onClick={() => history.push('/cakeInfo', o)}
+            />
             <div className={styles.info}>
               <p className={styles.name}>{o.name ?? '-'}</p>
-              <p className={styles.price}>{o.price ?? '-'}</p>
+              <p className={styles.price}>
+                {o.price ?? '-'}/约{o.weight ?? '-'}
+              </p>
               <div className={styles.btn}>
                 {shopList.map((o: any) => o.name).includes(o.name) ? (
                   <FillLoveType
