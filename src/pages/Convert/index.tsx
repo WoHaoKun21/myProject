@@ -169,8 +169,6 @@ const Convert: React.FC<ShopArr> = ({ shopList }) => {
   );
 };
 
-const stateToProps = ({ shop }: any) => {
-  return { ...shop };
-};
+const stateToProps = ({ shop }: any) => ({ ...shop });
 
 export default connect(stateToProps)(Convert);

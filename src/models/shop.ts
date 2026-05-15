@@ -21,6 +21,7 @@ export type ShopArr = {
 const test = {
   namespace: 'shop',
   state: {
+    user: {},
     shopList: [],
     cakeLists, // 全部甜点列表
   },

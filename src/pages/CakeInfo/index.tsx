@@ -52,7 +52,14 @@ const CakeInfo: React.FC = ({ shopList }: any) => {
         <div className={styles.infoRight}>
           <div>建议使用人数</div>
           <div>
-            {state.taste - 2 === 0 ? 1 : state.taste - 2}-{state.taste}人
+            {state.norms === 1
+              ? '1-2'
+              : state.norms === 2
+              ? '2-4'
+              : state.norms === 3
+              ? '5-8'
+              : state.norms === 4 && '15-20'}
+            人
           </div>
           <div className={styles.cakeType}>
             <span>
@@ -120,8 +127,6 @@ const CakeInfo: React.FC = ({ shopList }: any) => {
   );
 };
 
-const stateToProps = ({ shop }: any) => {
-  return { ...shop };
-};
+const stateToProps = ({ shop }: any) => ({ ...shop });
 
 export default connect(stateToProps)(CakeInfo);

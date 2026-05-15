@@ -12,7 +12,7 @@ import styles from './index.less';
 
 SwiperCore.use([Navigation, Pagination, Autoplay, A11y]);
 
-const Dessert: React.FC<ShopArr> = ({ shopList }) => {
+const Login: React.FC<ShopArr> = ({ shopList }) => {
   const dispatch = useDispatch();
 
   const addLove = (shop: any) => {
@@ -92,4 +92,4 @@ const Dessert: React.FC<ShopArr> = ({ shopList }) => {
 
 const stateToProps = ({ shop }: any) => ({ ...shop });
 
-export default connect(stateToProps)(Dessert);
+export default connect(stateToProps)(Login);

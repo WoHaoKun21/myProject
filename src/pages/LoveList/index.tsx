@@ -1,50 +1,77 @@
-import { connect } from '@umijs/max';
+import { FillLoveType } from '@/components/Icon';
+import { remove } from '@/constants';
+import { connect, useDispatch } from '@umijs/max';
+import { Empty } from 'antd';
 import React from 'react';
 import styles from './index.less';
 
 const LoveList: React.FC = ({ shopList }: any) => {
-  // 状态：统计数据预览（可从原HTML逻辑中迁移）
-  const stats = [
-    { label: '设备总数', value: '1,284', icon: '📦', color: '#1890ff' },
-    { label: '运行中', value: '1,156', icon: '⚙️', color: '#52c41a' },
-    { label: '故障待修', value: '12', icon: '⚠️', color: '#f5222d' },
-    // ...以此类推
-  ];
+  const dispatch = useDispatch();
 
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles.tableBox}>
-        <div className={styles.tableHeader}>设备台账列表</div>
-        <table>
-          <thead>
-            <tr>
-              <th>设备编号</th>
-              <th>设备名称</th>
-              <th>型号规格</th>
-              <th>安装位置</th>
-              <th>当前状态</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* 这里可以通过 map 渲染列表数据 */}
-            <tr>
-              <td>SB-2023-001</td>
-              <td>1# 取水泵组</td>
-              <td>KWP 300-400</td>
-              <td>1# 取水机房</td>
-              <td>
-                <span style={{ color: '#52c41a' }}>● 运行中</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div className={styles.container}>
+      {shopList.length > 0 ? (
+        shopList.map((o: any) => (
+          <div className={styles.shopItem} key={o.id}>
+            <img src={o.img ?? '/cake/ynbb.jpg'} alt="" />
+            <div className={styles.shopInfo}>
+              <div>
+                <span>名称：</span>
+                {o.name}
+              </div>
+              <div>
+                <span>价格：</span>
+                {o.price}/约{o.weight}
+              </div>
+              <div>
+                <span>口味：</span>
+                {o.taste === 1
+                  ? '雪域口味'
+                  : o.taste === 2
+                  ? '芝士口味'
+                  : o.taste === 3
+                  ? '巧克力味'
+                  : o.taste === 4
+                  ? '慕斯口味'
+                  : o.taste === 5
+                  ? '鲜果口味'
+                  : o.taste === 6 && '奶油口味'}
+              </div>
+              <div>
+                <span>规格：</span>
+                {o.norms === 1
+                  ? '1-2'
+                  : o.norms === 2
+                  ? '2-4'
+                  : o.norms === 3
+                  ? '5-8'
+                  : o.norms === 4 && '15-20'}
+                人
+              </div>
+              <div>
+                <span>祝福：</span>
+                {o.msg}
+              </div>
+            </div>
+            <div className={styles.shopPrice}>
+              <FillLoveType
+                onClick={() => remove(o, dispatch, shopList)}
+                style={{
+                  fontSize: 50,
+                  color: '#d6bb70',
+                  margin: '0px 10px',
+                }}
+              />
+            </div>
+          </div>
+        ))
+      ) : (
+        <Empty description="暂无数据，请添加" />
+      )}
     </div>
   );
 };
 
-const stateToProps = ({ shop }: any) => {
-  return { ...shop };
-};
+const stateToProps = ({ shop }: any) => ({ ...shop });
 
 export default connect(stateToProps)(LoveList);

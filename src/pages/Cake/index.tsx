@@ -80,7 +80,7 @@ const Cake: React.FC<ShopArr> = ({ shopList, cakeLists }) => {
           </ul>
         </div>
         <div>
-          <span>口味：</span>
+          <span>规格：</span>
           <ul>
             <li
               className={classNames([norms === '' && styles.active])}
@@ -172,8 +172,6 @@ const Cake: React.FC<ShopArr> = ({ shopList, cakeLists }) => {
   );
 };
 
-const stateToProps = ({ shop }: any) => {
-  return { ...shop };
-};
+const stateToProps = ({ shop }: any) => ({ ...shop });
 
 export default connect(stateToProps)(Cake);

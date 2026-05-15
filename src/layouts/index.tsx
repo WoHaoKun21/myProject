@@ -6,7 +6,7 @@ import {
 } from '@/components/Icon';
 import { ArrowUpOutlined, CloseOutlined } from '@ant-design/icons';
 import { connect, history, Outlet, useLocation } from '@umijs/max';
-import { ConfigProvider, Dropdown, Input, Modal, Space } from 'antd';
+import { ConfigProvider, Dropdown, Input, MenuProps, Modal, Space } from 'antd';
 import { useState } from 'react';
 import CommMenu from './CommMenu';
 import styles from './index.less';
@@ -31,6 +31,14 @@ const Layout = (props: any) => {
     open: false,
     title: '杭州',
   });
+
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: <div>游客登陆</div>,
+      onClick: () => history.push('/login'),
+    },
+  ];
 
   const { open, title } = modalObj;
 
@@ -103,7 +111,12 @@ const Layout = (props: any) => {
                 />
               </Dropdown>
             </Space>
-            <PersonType />
+
+            <Space>
+              <Dropdown menu={{ items }} placement="bottomCenter">
+                <PersonType className={styles.person} />
+              </Dropdown>
+            </Space>
           </div>
         </header>
         <div
@@ -213,8 +226,6 @@ const Layout = (props: any) => {
   );
 };
 
-const stateToProps = ({ shop }: any) => {
-  return { ...shop };
-};
+const stateToProps = ({ shop }: any) => ({ ...shop });
 
 export default connect(stateToProps)(Layout);

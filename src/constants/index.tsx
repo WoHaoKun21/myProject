@@ -23,7 +23,7 @@ export const commCode = (shop: any, shopList: any[], dispatch: Dispatch) => {
         <img src={shop.img ?? '/'} />
         <div>
           <div>{shop.name ?? '-'}</div>
-          <div>{shop.price}</div>
+          <div>{shop.price}/约{shop.weight}</div>
         </div>
         <CloseOutlined
           className={styles.close}
