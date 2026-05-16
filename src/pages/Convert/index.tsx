@@ -14,11 +14,14 @@ import { Tabs, message } from 'antd';
 import React, { useState } from 'react';
 import styles from './index.less';
 
-const Convert: React.FC<ShopArr> = ({ shopList }) => {
+const Convert: React.FC<ShopArr> = ({ shopList, user }) => {
   const dispatch = useDispatch();
   const [selectKey, setSelectKey] = useState<string>('1');
 
   const addLove = (shop: any) => {
+    if (!user.login) {
+      return dispatch({ type: 'shop/addLogin', payload: { open: true } });
+    }
     const newList = commCode(shop, shopList, dispatch);
     if (newList.length !== 0) {
       dispatch({ type: 'shop/add', payload: newList });
@@ -42,17 +45,16 @@ const Convert: React.FC<ShopArr> = ({ shopList }) => {
         {selectKey === '1'
           ? convert1.map((o) => (
               <div className={styles.item} key={o.name}>
-                <img
-                  src={o.img ?? '/cake/byg.jpg'}
-                  alt=""
-                  onClick={() => history.push('/cakeInfo', o)}
-                />
+                <img src={o.img ?? '/cake/byg.jpg'} alt="" />
                 <div className={styles.info}>
                   <p className={styles.name}>{o.name ?? '-'}</p>
                   <p className={styles.price}>
                     {o.price ?? '-'}/约{o.weight ?? '-'}
                   </p>
-                  <div className={styles.btn}>
+                  <div
+                    className={styles.btn}
+                    onClick={() => history.push('/cakeInfo', o)}
+                  >
                     立即查看
                     <RightOutlined style={{ fontSize: 10 }} />
                   </div>
@@ -62,17 +64,16 @@ const Convert: React.FC<ShopArr> = ({ shopList }) => {
           : selectKey === '2'
           ? convert2.map((o) => (
               <div className={styles.item} key={o.name}>
-                <img
-                  src={o.img ?? '/cake/byg.jpg'}
-                  alt=""
-                  onClick={() => history.push('/cakeInfo', o)}
-                />
+                <img src={o.img ?? '/cake/byg.jpg'} alt="" />
                 <div className={styles.info}>
                   <p className={styles.name}>{o.name ?? '-'}</p>
                   <p className={styles.price}>
                     {o.price ?? '-'}/约{o.weight ?? '-'}
                   </p>
-                  <div className={styles.btn}>
+                  <div
+                    className={styles.btn}
+                    onClick={() => history.push('/cakeInfo', o)}
+                  >
                     立即查看
                     <RightOutlined style={{ fontSize: 10 }} />
                   </div>
@@ -82,11 +83,7 @@ const Convert: React.FC<ShopArr> = ({ shopList }) => {
           : selectKey === '3'
           ? convert3.map((o) => (
               <div className={styles.item} key={o.name}>
-                <img
-                  src={o.img ?? '/cake/byg.jpg'}
-                  alt=""
-                  onClick={() => history.push('/cakeInfo', o)}
-                />
+                <img src={o.img ?? '/cake/byg.jpg'} alt="" />
                 <div className={styles.info}>
                   <p className={styles.name}>{o.name ?? '-'}</p>
                   <p className={styles.price}>
@@ -127,17 +124,16 @@ const Convert: React.FC<ShopArr> = ({ shopList }) => {
           : selectKey === '4'
           ? convert4.map((o) => (
               <div className={styles.item} key={o.name}>
-                <img
-                  src={o.img ?? '/cake/byg.jpg'}
-                  alt=""
-                  onClick={() => history.push('/cakeInfo', o)}
-                />
+                <img src={o.img ?? '/cake/byg.jpg'} alt="" />
                 <div className={styles.info}>
                   <p className={styles.name}>{o.name ?? '-'}</p>
                   <p className={styles.price}>
                     {o.price ?? '-'}/约{o.weight ?? '-'}
                   </p>
-                  <div className={styles.btn}>
+                  <div
+                    className={styles.btn}
+                    onClick={() => history.push('/cakeInfo', o)}
+                  >
                     立即查看
                     <RightOutlined style={{ fontSize: 10 }} />
                   </div>
@@ -147,17 +143,16 @@ const Convert: React.FC<ShopArr> = ({ shopList }) => {
           : selectKey === '5' &&
             convert5.map((o) => (
               <div className={styles.item} key={o.name}>
-                <img
-                  src={o.img ?? '/cake/byg.jpg'}
-                  alt=""
-                  onClick={() => history.push('/cakeInfo', o)}
-                />
+                <img src={o.img ?? '/cake/byg.jpg'} alt="" />
                 <div className={styles.info}>
                   <p className={styles.name}>{o.name ?? '-'}</p>
                   <p className={styles.price}>
                     {o.price ?? '-'}/约{o.weight ?? '-'}
                   </p>
-                  <div className={styles.btn}>
+                  <div
+                    className={styles.btn}
+                    onClick={() => history.push('/cakeInfo', o)}
+                  >
                     立即查看
                     <RightOutlined style={{ fontSize: 10 }} />
                   </div>

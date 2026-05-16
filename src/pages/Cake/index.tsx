@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import styles from './index.less';
 
-const Cake: React.FC<ShopArr> = ({ shopList, cakeLists }) => {
+const Cake: React.FC<ShopArr> = ({ shopList, cakeLists, user }) => {
   const dispatch = useDispatch();
   const { state }: { pathname: string; state: any } = useLocation(); // 获取当前路径
   const [select, setSelect] = useState<{
@@ -19,6 +19,9 @@ const Cake: React.FC<ShopArr> = ({ shopList, cakeLists }) => {
   });
 
   const addLove = (shop: any) => {
+    if (!user.login) {
+      return dispatch({ type: 'shop/addLogin', payload: { open: true } });
+    }
     const newList = commCode(shop, shopList, dispatch);
     if (newList.length !== 0) {
       dispatch({ type: 'shop/add', payload: newList });

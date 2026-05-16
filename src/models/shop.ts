@@ -14,6 +14,7 @@ export type ShopItem = {
 };
 
 export type ShopArr = {
+  user: { login: boolean; open: boolean };
   shopList: ShopItem[];
   cakeLists: ShopItem[];
 };
@@ -21,12 +22,20 @@ export type ShopArr = {
 const test = {
   namespace: 'shop',
   state: {
-    user: {},
+    user: { open: false, login: false },
     shopList: [],
     cakeLists, // 全部甜点列表
   },
 
   reducers: {
+    addLogin(state: any, { payload }: any) {
+      return { ...state, user: { ...state.user, ...payload } };
+    },
+
+    removeLogin(state: any, { payload }: any) {
+      return { ...state, user: { ...state.user, ...payload } };
+    },
+
     add(state: any, { payload }: any) {
       return { ...state, shopList: payload };
     },

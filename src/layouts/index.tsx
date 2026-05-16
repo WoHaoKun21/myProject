@@ -1,13 +1,17 @@
-import {
-  CoordinateType,
-  LoveType,
-  PersonType,
-  SearchType,
-} from '@/components/Icon';
+import { LoveType, PersonType, SearchType } from '@/components/Icon';
+import { ShopArr } from '@/models/shop';
 import { ArrowUpOutlined, CloseOutlined } from '@ant-design/icons';
-import { connect, history, Outlet, useLocation } from '@umijs/max';
-import { ConfigProvider, Dropdown, Input, MenuProps, Modal, Space } from 'antd';
-import { useState } from 'react';
+import { connect, history, Outlet, useDispatch, useLocation } from '@umijs/max';
+import {
+  ConfigProvider,
+  Dropdown,
+  Input,
+  MenuProps,
+  message,
+  Modal,
+  Space,
+} from 'antd';
+import React, { useState } from 'react';
 import CommMenu from './CommMenu';
 import styles from './index.less';
 
@@ -16,31 +20,36 @@ const obj = {
   label: <div>您还没有添加喜欢的甜品，快去逛逛吧！</div>,
 };
 
-const Layout = (props: any) => {
-  let { shopList } = props;
-
-  const { pathname } = useLocation();
+const Layout: React.FC<ShopArr> = ({ shopList, user }) => {
   const [search, setSearch] = useState<{ open: boolean; value: string }>({
     open: false,
     value: '',
   });
-  const [modalObj, setModalObj] = useState<{
-    open: boolean;
-    title: string;
-  }>({
-    open: false,
-    title: '杭州',
-  });
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
 
   const items: MenuProps['items'] = [
     {
       key: '1',
       label: <div>游客登陆</div>,
-      onClick: () => history.push('/login'),
+      onClick: () => {
+        if (user.login) {
+          return message.success('您已使用游客身份登录！');
+        }
+        history.push('/login');
+      },
     },
+    user.login
+      ? {
+          key: '2',
+          label: <div>退出登陆</div>,
+          onClick: () => {
+            dispatch({ type: 'shop/removeLogin', payload: { login: false } });
+            dispatch({ type: 'shop/remove', payload: [] });
+          },
+        }
+      : null,
   ];
-
-  const { open, title } = modalObj;
 
   return (
     <ConfigProvider
@@ -57,9 +66,8 @@ const Layout = (props: any) => {
           }}
         >
           <div className={styles.left}>
-            <div onClick={() => setModalObj((d) => ({ ...d, open: true }))}>
-              <CoordinateType style={{ fontSize: 22 }} />
-              {title}
+            <div>
+              <img src="/logo.png" alt="" />
             </div>
             <span>甜点DESSERT</span>
           </div>
@@ -101,7 +109,9 @@ const Layout = (props: any) => {
             />
             <Space>
               <Dropdown
-                menu={{ items: shopList.length !== 0 ? shopList : [obj] }}
+                menu={{
+                  items: shopList.length !== 0 ? shopList : ([obj] as any[]),
+                }}
                 placement="bottomCenter"
               >
                 <LoveType
@@ -131,16 +141,17 @@ const Layout = (props: any) => {
           </section>
           <footer>
             <ul className={styles.info}>
-              <li>甜点公告</li>
-              <li>关于甜点</li>
-              <li>客户服务</li>
-              <li>经营许可证</li>
-              <li>生产许可证</li>
-              <li>付费协议</li>
-              <li>联系我们</li>
+              <li onClick={() => history.push('/home')}>首页</li>
+              <li onClick={() => history.push('/cake')}>甜点甄选</li>
+              <li onClick={() => history.push('/dessert')}>甜品优选</li>
+              <li onClick={() => history.push('/convert')}>甜点专区</li>
+              <li onClick={() => history.push('/convert')} />
+              <li onClick={() => history.push('/convert')} />
+              <li onClick={() => history.push('/convert')} />
+              <li onClick={() => history.push('/convert')} />
             </ul>
             <div className={styles.info}>
-              如有问题，请联系我们的客服人员。工作时间：周一至周日 9:00-21:00
+              愿你的生活像刚出炉的舒芙蕾，外表看似脆弱，内心却藏着云朵般的柔软与温热。每一次品尝都是对美好的重新定义，每一口甜蜜都是生活给你的温柔拥抱。愿你在平凡的日子里，也能像甜品师一样，用心调配属于自己的幸福配方——用耐心做底料，用热爱当糖霜，把挫折化作巧克力碎屑，洒在人生的蛋糕上，让它成为最独特的装饰。生活或许会有苦涩，但你永远可以选择用甜点般的视角，去发现那些藏在角落里的微光与小确幸。愿你的每一天，都能被甜蜜治愈，被温柔以待。{' '}
             </div>
           </footer>
         </div>
@@ -158,70 +169,25 @@ const Layout = (props: any) => {
             <span>返回顶部</span>
           </div>
         </div>
-        {open && (
-          <Modal
-            centered
-            open={true}
-            title={
-              <div>
-                当前选择城市：
-                <CoordinateType style={{ marginRight: 3 }} />
-                杭州
-              </div>
-            }
-            footer={null}
-            onCancel={() => setModalObj((d) => ({ ...d, open: false }))}
-            getContainer={
-              document.getElementsByClassName(
-                styles.container,
-              )[0] as HTMLElement
-            }
-          >
-            <p>请选择您所配送的城市：</p>
-            <ul className={styles.cityList}>
-              <li onClick={() => setModalObj({ open: false, title: '上海' })}>
-                上海
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '北京' })}>
-                北京
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '广州' })}>
-                广州
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '深圳' })}>
-                深圳
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '杭州' })}>
-                杭州
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '无锡' })}>
-                无锡
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '南京' })}>
-                南京
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '苏州' })}>
-                苏州
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '南通' })}>
-                南通
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '石家庄' })}>
-                石家庄
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '天津' })}>
-                天津
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '宁波' })}>
-                宁波
-              </li>
-              <li onClick={() => setModalObj({ open: false, title: '成都' })}>
-                成都
-              </li>
-            </ul>
-          </Modal>
-        )}
       </div>
+      <Modal
+        title="提示"
+        centered
+        okText="去登陆"
+        cancelText="取消"
+        open={user.open}
+        onOk={() => {
+          history.push('/login');
+          dispatch({ type: 'shop/addLogin', payload: { open: false } });
+        }}
+        onCancel={() =>
+          dispatch({ type: 'shop/addLogin', payload: { open: false } })
+        }
+      >
+        <div style={{ textAlign: 'center' }}>
+          登陆后可加入喜欢！是否跳转到登陆页面？
+        </div>
+      </Modal>
     </ConfigProvider>
   );
 };

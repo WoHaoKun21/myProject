@@ -7,16 +7,20 @@ import {
   WeightType,
 } from '@/components/Icon';
 import { commCode, remove } from '@/constants';
+import { ShopArr } from '@/models/shop';
 import { connect, history, useDispatch, useLocation } from '@umijs/max';
 import { message } from 'antd';
 import React, { useEffect } from 'react';
 import styles from './index.less';
 
-const CakeInfo: React.FC = ({ shopList }: any) => {
+const CakeInfo: React.FC<ShopArr> = ({ shopList, user }) => {
   const { pathname, state }: { pathname: string; state: any } = useLocation(); // 获取当前路径
   const dispatch = useDispatch();
 
   const addLove = (shop: any) => {
+    if (!user.login) {
+      return dispatch({ type: 'shop/addLogin', payload: { open: true } });
+    }
     const newList = commCode(shop, shopList, dispatch);
     if (newList.length !== 0) {
       dispatch({ type: 'shop/add', payload: newList });

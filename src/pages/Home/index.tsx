@@ -11,10 +11,13 @@ import styles from './index.less';
 
 SwiperCore.use([Navigation, Pagination, Autoplay, A11y]);
 
-const Home: React.FC<ShopArr> = ({ shopList }) => {
+const Home: React.FC<ShopArr> = ({ shopList, user }) => {
   const dispatch = useDispatch();
 
   const addLove = (shop: any) => {
+    if (!user.login) {
+      return dispatch({ type: 'shop/addLogin', payload: { open: true } });
+    }
     const newList = commCode(shop, shopList, dispatch);
     if (newList.length !== 0) {
       dispatch({ type: 'shop/add', payload: newList });

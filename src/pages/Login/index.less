@@ -1,70 +1,82 @@
 .container {
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  width: 100%;
-  .top {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 47%;
-    height: 320px;
-    img {
-      width: 100%;
-      height: auto;
-      cursor: pointer;
-    }
-  }
-  .list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
-    width: 47%;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background: url(../../../public/login/bgc.png) no-repeat center;
+  background-size: 100% 100%;
+  user-select: none;
 
-    .item {
-      padding: 19px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 260px;
-      text-align: center;
-      transition: all 0.7s;
-      > img {
+  .box_style {
+    padding-top: 50px;
+    width: 700px;
+    height: 500px;
+    margin-bottom: 100px;
+    background: url(../../../public/login/bg.png) no-repeat center;
+    background-size: 100% 100%;
+
+    :global {
+      .ant-pro-form-login-container {
         width: 100%;
-        height: 100%;
-        cursor: pointer;
-        transition: all 0.7s;
-      }
-      .info {
-        padding: 16px 8px 0;
-        transition: all 0.2s;
-        .name {
-          margin: 0 0 6px;
-          font-size: 13px;
-          color: #333;
+        padding: 0px;
+        background: none;
+        .ant-pro-form-login-top {
+          width: 100%;
+          margin: 44px 0px 38px;
+          line-height: 1;
+          .ant-pro-form-login-header > .ant-pro-form-login-title {
+            width: 100%;
+            color: #c5a059;
+            font-weight: normal;
+            font-size: 44px;
+            text-align: center;
+          }
         }
-
-        .price {
-          margin: 0 0 12px;
-          font-size: 12px;
-          color: #666;
-        }
-
-        .btn {
-          padding: 8px 20px;
-          border: none;
-          font-size: 12px;
-          cursor: pointer;
-          > span:last-of-type {
-            border-bottom: 1px solid #333;
+        .ant-pro-form-login-main {
+          width: 424px;
+          min-width: 424px;
+          .ant-form-item {
+            margin-bottom: 20px;
+          }
+          .ant-input-affix-wrapper > .ant-input {
+            height: 48px;
+            color: #999999;
+            font-size: 27px;
+          }
+          .ant-input-affix-wrapper-lg {
+            padding: 0 11px;
+            font-size: 21px;
+          }
+          input:-internal-autofill-previewed,
+          input:-internal-autofill-selected {
+            transition: background-color 5000s ease-out 0.5s;
+            -webkit-text-fill-color: #999999;
+          }
+          .ant-input-affix-wrapper {
+            border-radius: 0px;
+          }
+          .ant-input-password-icon.anticon,
+          .anticon svg {
+            color: #c5a059;
           }
         }
       }
+      .ant-btn-primary {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 329px;
+        height: 43px;
+        margin: 0 auto;
+        font-size: 18px;
+        background: #dbb46c;
+        border: none;
+      }
 
-      &:hover {
-        background-color: #fffbf0;
-        > img {
-          transform: scale(1.05);
-        }
+      .ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
+        background: #c5a059;
       }
     }
   }

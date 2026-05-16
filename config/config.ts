@@ -19,23 +19,11 @@ export default defineConfig({
   // head标签内的script：umi4版本不支持document.ejs，使用“headScripts”可在全局引入script标签
   headScripts: [
     { src: `/leaflet/leaflet.js` /* defer: true */ }, // defer用来让script标签在页面渲染完毕后执行，效果类似于“scripts”的配置
-    { src: `/leaflet/leaflet-src.js` },
-    { src: `/leaflet/proj4.js` },
-    { src: `/leaflet/proj4leaflet.js` },
-    { src: `/sdk.js` },
   ],
   // 在"root"挂载点后面添加script标签
   scripts: [`var a`],
   // 配置额外的link标签
   links: [{ href: '/leaflet/leaflet.css', rel: 'stylesheet' }],
   routes,
-  // 代理
-  proxy: {
-    '/api': {
-      target: 'http://47.97.9.139:8080/Apidemo',
-      changeOrigin: true,
-      pathRewrite: { '^/api': '' },
-    },
-  },
   npmClient: 'npm',
 });

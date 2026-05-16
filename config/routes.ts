@@ -58,6 +58,13 @@ const routes: Routes[] = [
     component: './LoveList',
     hideInMenu: true,
   },
+  {
+    path: '/login',
+    name: '游客登陆',
+    component: './Login',
+    hideInMenu: true,
+    layout: false,
+  },
   { component: './404', hideInMenu: true },
 ];
 export default routes;
